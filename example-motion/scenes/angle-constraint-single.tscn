@@ -1,0 +1,40 @@
+[gd_scene load_steps=2 format=3 uid="uid://d1yq5r4p5ntpb"]
+
+[ext_resource type="Script" path="res://example-motion/scripts/single-angle-constraint.gd" id="1_ovq1r"]
+
+[node name="TransformWrapper" type="Node2D"]
+
+[node name="AngleConstrainSingle" type="Node2D" parent="."]
+position = Vector2(586, 292)
+script = ExtResource("1_ovq1r")
+distanceToTarget = 300.0
+minimumAngle = 45
+
+[node name="DistanceMarker" type="Line2D" parent="AngleConstrainSingle"]
+points = PackedVector2Array(0, 0, 0, 1)
+width = 300.0
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="AngleRangePositive" type="Line2D" parent="AngleConstrainSingle"]
+points = PackedVector2Array(0, 0, 116, 93)
+default_color = Color(0.999955, 0.589244, 0.52869, 1)
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="AngleRangeNegative" type="Line2D" parent="AngleConstrainSingle"]
+points = PackedVector2Array(0, 0, -116, 93)
+default_color = Color(1, 0.588235, 0.529412, 1)
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="PreviousLink" type="Line2D" parent="AngleConstrainSingle"]
+points = PackedVector2Array(0, 0, 0, 150)
+default_color = Color(0.468128, 0.468128, 0.468128, 1)
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="NextLink" type="Line2D" parent="AngleConstrainSingle"]
+points = PackedVector2Array(0, 0, 150, 0)
+default_color = Color(0, 0, 0, 1)
