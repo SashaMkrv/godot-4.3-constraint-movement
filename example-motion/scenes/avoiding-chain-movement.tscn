@@ -35,22 +35,20 @@ begin_cap_mode = 2
 end_cap_mode = 2
 round_precision = 14
 
-[node name="Marker2D2" type="Marker2D" parent="." groups=["ObstacleMarker"]]
-visible = false
+[node name="Obstacles" type="Node2D" parent="."]
+script = ExtResource("2_gwm18")
+
+[node name="Marker2D2" type="Marker2D" parent="Obstacles" groups=["ObstacleMarker"]]
 position = Vector2(867, 412)
 gizmo_extents = 50.0
 script = ExtResource("3_os6s5")
 
-[node name="Marker2D3" type="Marker2D" parent="." groups=["ObstacleMarker"]]
-visible = false
+[node name="Marker2D3" type="Marker2D" parent="Obstacles" groups=["ObstacleMarker"]]
 position = Vector2(722, 139)
 gizmo_extents = 75.0
 script = ExtResource("3_os6s5")
 
-[node name="Marker2D" type="Marker2D" parent="." groups=["ObstacleMarker"]]
+[node name="Marker2D" type="Marker2D" parent="Obstacles" groups=["ObstacleMarker"]]
 position = Vector2(333, 256)
 script = ExtResource("3_os6s5")
 radius = 150
-
-[node name="Obstacles" type="Node2D" parent="."]
-script = ExtResource("2_gwm18")
