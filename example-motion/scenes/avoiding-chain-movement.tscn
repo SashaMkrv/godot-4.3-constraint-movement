@@ -1,0 +1,56 @@
+[gd_scene load_steps=6 format=3 uid="uid://2imjpwc4ueyd"]
+
+[ext_resource type="Script" path="res://example-motion/scripts/scene-controllers/avoiding-obstacles.gd" id="1_uelhs"]
+[ext_resource type="Script" path="res://example-motion/scripts/obstacle-nodes/circle-handler.gd" id="2_gwm18"]
+[ext_resource type="Script" path="res://example-motion/scripts/obstacle-nodes/circle-marker.gd" id="3_os6s5"]
+
+[sub_resource type="Curve" id="Curve_2bg43"]
+_data = [Vector2(0.00675675, 0.684939), 0.0, 2.67274, 0, 0, Vector2(0.317568, 0.996249), 0.0, 0.0, 0, 0, Vector2(0.64527, 0.853722), -0.719293, -0.719293, 0, 0, Vector2(1, 0.58367), 0.0804504, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="Gradient" id="Gradient_gr071"]
+colors = PackedColorArray(7.5084e-06, 0.941721, 0.776408, 1, 0.859995, 0.829577, 0, 1)
+
+[node name="AvoidingObstacles_JointsOnly" type="Node2D"]
+script = ExtResource("1_uelhs")
+distanceToTarget = 100.0
+linkSize = 50.0
+minimumAngle = 110.0
+
+[node name="CursorMarker" type="Line2D" parent="."]
+points = PackedVector2Array(0, 0, 0, 1)
+width = 90.0
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="ChainLine" type="Line2D" parent="."]
+points = PackedVector2Array(0, 0, -200, 0, -400, 0, -600, 0, -800, 0, -1000, 0, -1200, 0, -1400, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+width = 75.0
+width_curve = SubResource("Curve_2bg43")
+default_color = Color(0.0431373, 0.780392, 0.615686, 1)
+gradient = SubResource("Gradient_gr071")
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+round_precision = 14
+
+[node name="Marker2D2" type="Marker2D" parent="." groups=["ObstacleMarker"]]
+visible = false
+position = Vector2(867, 412)
+gizmo_extents = 50.0
+script = ExtResource("3_os6s5")
+
+[node name="Marker2D3" type="Marker2D" parent="." groups=["ObstacleMarker"]]
+visible = false
+position = Vector2(722, 139)
+gizmo_extents = 75.0
+script = ExtResource("3_os6s5")
+
+[node name="Marker2D" type="Marker2D" parent="." groups=["ObstacleMarker"]]
+position = Vector2(333, 256)
+script = ExtResource("3_os6s5")
+radius = 150
+
+[node name="Obstacles" type="Node2D" parent="."]
+script = ExtResource("2_gwm18")
