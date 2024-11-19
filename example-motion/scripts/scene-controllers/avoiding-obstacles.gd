@@ -289,7 +289,7 @@ func getIntersectionVectors(
 	origin2: Vector2,
 	radius2: float
 ) -> Array[Vector2]:
-	var originDistance = (origin1 - origin2).length()
+	var originDistance = (origin2 - origin1).length()
 	
 	var baseLength1 = (
 		pow(radius1, 2.0) - pow(radius2, 2.0) + pow(originDistance, 2.0)
