@@ -74,8 +74,13 @@ func bodyLinkPosition(
 	distance: float,
 	minimumAngle: float
 	) -> Vector2:
-		var angleConstrained = angleConstrainedConstantDistance(
+		var constantIdeal = constrainConstantDistance(
 			current,
+			beforeLink,
+			distance
+		)
+		var angleConstrained = angleConstrainedConstantDistance(
+			constantIdeal,
 			beforeLink,
 			beforeLinkFromEnd,
 			distance,
@@ -122,16 +127,10 @@ func angleConstrainedConstantDistance(
 	distance: float,
 	minimumAngleDifference: float
 	) -> Vector2:
-		var idealLocation := getIdealConstantNodeLocation(
-			targetLocation,
-			currentLocation,
-			distance
-		)
-		
 		if previousLinkFromTarget == Vector2.ZERO:
-			return idealLocation
+			return currentLocation
 		
-		var currentLinkFromTarget := idealLocation - targetLocation
+		var currentLinkFromTarget := currentLocation - targetLocation
 		
 		var signedLinkAngle := rad_to_deg(
 			previousLinkFromTarget.angle_to(currentLinkFromTarget)
@@ -139,7 +138,7 @@ func angleConstrainedConstantDistance(
 		var linkAngle: float = abs(signedLinkAngle)
 		
 		if linkAngle >= minimumAngleDifference:
-			return idealLocation
+			return currentLocation
 		
 		var radRotation := deg_to_rad(minimumAngleDifference)
 		
