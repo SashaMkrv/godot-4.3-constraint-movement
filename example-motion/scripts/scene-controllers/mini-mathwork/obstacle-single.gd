@@ -7,7 +7,6 @@ extends Node2D
 func _ready() -> void:
 	pass # Replace with function body.
 
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
@@ -69,13 +68,15 @@ func avoidObstacleConstraint(
 	_current: Vector2,
 	target: Vector2,
 	distance: float,
-	obstacles: Array[CircleInfo]
+	obstacles: Array[CircleInfo],
+	ideal: Vector2 = _current
 ) -> Vector2:
 	var current = _current
 	for obstacle in obstacles:
-		var obstacleLocation = Vector2(obstacle.location)
+		var obstacleLocation = obstacle.location
 		var fromObstacleToTarget = target - obstacleLocation
 		var obstacleRadius = obstacle.radius
+		var obstacleBuffer = 1.0
 		
 		var distanceBetweenOrigins = fromObstacleToTarget.length()
 		
@@ -86,13 +87,15 @@ func avoidObstacleConstraint(
 		):
 			continue
 		
-		# check if all possible joint locations are INSIDE
+		# check if all possible link locations intersect
 		# the obstacle
 		# if yes, good luck, so long!
 		if (
-			obstacleRadius >= distance
+			obstacleRadius > distance
 		) and (
 			distanceBetweenOrigins < obstacleRadius
+		) and not (
+			is_equal_approx(distanceBetweenOrigins, obstacleRadius)
 		):
 			continue
 		
@@ -107,7 +110,6 @@ func avoidObstacleConstraint(
 		):
 			continue
 		
-		
 		# check if the obstacle is fully inside
 		# the circle of the target
 		# if yes, we can't use intersections
@@ -121,12 +123,13 @@ func avoidObstacleConstraint(
 			var tangents = getTangentVectors(
 				target,
 				obstacleLocation,
-				obstacleRadius
+				obstacleRadius + obstacleBuffer
 			)
 			var upper: Vector2 = tangents[0] * distance + target
 			var lower: Vector2 = tangents[1] * distance + target
+			
 			if (
-				upper.distance_to(current) <= lower.distance_to(current)
+				upper.distance_to(ideal) <= lower.distance_to(ideal)
 			):
 				current = upper
 				continue
@@ -138,27 +141,56 @@ func avoidObstacleConstraint(
 		# get intersection of possible joint locations
 		# and obstacle circles
 		# return closest one
+		
+		# this is not a good result if the target
+		# is too close to the obstacle.
 		var candidates = getIntersectionVectors(
 			target,
 			distance,
 			obstacleLocation,
-			obstacleRadius
+			obstacleRadius + obstacleBuffer
 		)
-		var upper: Vector2 = candidates[0]
-		var lower: Vector2 = candidates[1]
+		var upperIntersection: Vector2 = candidates[0]
+		var lowerIntersection: Vector2 = candidates[1]
 		
 		if (
-			upper.distance_to(current) <= lower.distance_to(current)
+			upperIntersection.distance_to(ideal) <= lowerIntersection.distance_to(ideal)
 		):
-			current = upper
+			current = upperIntersection
+		else:
+			current = lowerIntersection
+		
+		# check if the previous result intersects.
+		# if it does, grab the tangent instead.
+		# isn't it cool how much computers can compute?
+		# what a mess.
+		# I bet there's some actual math I could do
+		# to check which one to use.
+		if not checkLineCircleIntersection(
+			target,
+			current,
+			obstacleLocation,
+			obstacleRadius
+		):
+			continue
+		
+		var tangents = getTangentVectors(
+				target,
+				obstacleLocation,
+				obstacleRadius + obstacleBuffer
+			)
+		var upperTangent: Vector2 = tangents[0] * distance + target
+		var lowerTangent: Vector2 = tangents[1] * distance + target
+		
+		if (
+			upperTangent.distance_to(ideal) <= lowerTangent.distance_to(ideal)
+		):
+			current = upperTangent
 			continue
 		else:
-			current = lower
+			current = lowerTangent
 			continue
 		
-		
-		# get intersections, then pick the closest one
-		# if there's only one intersection
 	return current
 
 
@@ -187,7 +219,7 @@ func getIntersectionVectors(
 	origin2: Vector2,
 	radius2: float
 ) -> Array[Vector2]:
-	var originDistance = (origin1 - origin2).length()
+	var originDistance = (origin2 - origin1).length()
 	
 	var baseLength1 = (
 		pow(radius1, 2.0) - pow(radius2, 2.0) + pow(originDistance, 2.0)
@@ -204,18 +236,21 @@ func getIntersectionVectors(
 		origin2 - origin1
 	).normalized() * baseLength1 + origin1
 	
+	var unitBaseDirection = (
+		origin2 - origin1
+	).normalized()
+	var perpindicularUpper = Vector2(
+		unitBaseDirection.y,
+		-unitBaseDirection.x
+	) * height
+	var perpindicularLower = Vector2(
+		-unitBaseDirection.y,
+		unitBaseDirection.x
+	) * height
 	
-	var yPerp = (origin2.y-origin1.y)/originDistance
-	var xPerp = (origin2.x-origin1.x)/originDistance
 	
-	var upper = Vector2(
-		lineOfIntersectionCenter.x + height * yPerp,
-		lineOfIntersectionCenter.y + height * xPerp
-	)
-	var lower = Vector2(
-		lineOfIntersectionCenter.x - height * yPerp,
-		lineOfIntersectionCenter.y - height * xPerp
-	)
+	var upper = perpindicularUpper + lineOfIntersectionCenter
+	var lower = perpindicularLower + lineOfIntersectionCenter
 	return [upper, lower]
 
 
@@ -251,7 +286,7 @@ func checkLineCircleIntersection(
 	return false
 
 class CircleInfo:
-	var location: Vector2i
+	var location: Vector2
 	var radius: int
 	func _init(_location: Vector2i, _radius: int) -> void:
 		location = _location
