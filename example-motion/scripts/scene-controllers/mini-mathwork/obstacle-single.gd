@@ -202,7 +202,8 @@ func getIntersectionVectors(
 	# multiple unit vector by traingle base length
 	var lineOfIntersectionCenter = (
 		origin2 - origin1
-	).normalized() * baseLength1
+	).normalized() * baseLength1 + origin1
+	
 	
 	var yPerp = (origin2.y-origin1.y)/originDistance
 	var xPerp = (origin2.x-origin1.x)/originDistance
