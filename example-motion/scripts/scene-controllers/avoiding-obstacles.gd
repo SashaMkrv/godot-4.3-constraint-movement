@@ -301,19 +301,23 @@ func getIntersectionVectors(
 	# multiple unit vector by traingle base length
 	var lineOfIntersectionCenter = (
 		origin2 - origin1
-	).normalized() * baseLength1
+	).normalized() * baseLength1 + origin1
 	
-	var yPerp = (origin2.y-origin1.y)/originDistance
-	var xPerp = (origin2.x-origin1.x)/originDistance
+	var unitBaseDirection = (
+		origin2 - origin1
+	).normalized()
+	var perpindicularUpper = Vector2(
+		unitBaseDirection.y,
+		-unitBaseDirection.x
+	) * height
+	var perpindicularLower = Vector2(
+		-unitBaseDirection.y,
+		unitBaseDirection.x
+	) * height
 	
-	var upper = Vector2(
-		lineOfIntersectionCenter.x + height * yPerp,
-		lineOfIntersectionCenter.y + height * xPerp
-	)
-	var lower = Vector2(
-		lineOfIntersectionCenter.x - height * yPerp,
-		lineOfIntersectionCenter.y - height * xPerp
-	)
+	
+	var upper = perpindicularUpper + lineOfIntersectionCenter
+	var lower = perpindicularLower + lineOfIntersectionCenter
 	return [upper, lower]
 
 
