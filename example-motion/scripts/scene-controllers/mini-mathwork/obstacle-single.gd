@@ -163,9 +163,11 @@ func avoidObstacleConstraint(
 func getTangentVectors(
 	point: Vector2,
 	circleOrigin: Vector2,
+	circleRadius: float
 ) -> Array[Vector2]:
 	# I miss tuple returns.
 	var hypotnuse = (point - circleOrigin).length()
+	var opposite = circleRadius
 	var theta = asin(opposite/hypotnuse)
 	
 	var baseVector = (circleOrigin - point).normalized()
