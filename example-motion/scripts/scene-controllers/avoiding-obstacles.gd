@@ -267,17 +267,17 @@ func getLocationWithObstacleAvoision(
 func getTangentVectors(
 	point: Vector2,
 	circleOrigin: Vector2,
-	radius: float
+	circleRadius: float
 ) -> Array[Vector2]:
 	# I miss tuple returns.
 	var hypotnuse = (point - circleOrigin).length()
-	var opposite = radius
+	var opposite = circleRadius
 	var theta = asin(opposite/hypotnuse)
 	
-	var baseVector = (circleOrigin - point).normalized()
+	var baseVector = (circleOrigin - point)
 	var upper = baseVector.rotated(theta)
 	var lower = baseVector.rotated(-theta)
-	return [upper, lower]
+	return [upper.normalized(), lower.normalized()]
 
 ## We're assuming there IS an intersection here.
 ## Godot's functions return packed vector arrays
