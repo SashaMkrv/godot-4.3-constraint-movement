@@ -1,12 +1,12 @@
 [gd_scene load_steps=2 format=3 uid="uid://d1yq5r4p5ntpb"]
 
-[ext_resource type="Script" path="res://example-motion/scripts/scene-controllers/single-angle-constraint.gd" id="1_ovq1r"]
+[ext_resource type="Script" path="res://example-motion/scripts/scene-controllers/mini-mathwork/single-angle-constraint.gd" id="1_ig408"]
 
 [node name="TransformWrapper" type="Node2D"]
 
 [node name="AngleConstrainSingle" type="Node2D" parent="."]
 position = Vector2(586, 292)
-script = ExtResource("1_ovq1r")
+script = ExtResource("1_ig408")
 distanceToTarget = 300.0
 minimumAngle = 45
 
