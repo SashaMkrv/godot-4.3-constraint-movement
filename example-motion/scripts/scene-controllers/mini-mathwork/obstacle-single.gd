@@ -1,7 +1,6 @@
 extends Node2D
 
 @onready var linkLine : Line2D = %LinkLine
-@onready var obstacle : CircleMarker = %Obstacle
 @onready var target : CircleMarker = %Target
 
 # Called when the node enters the scene tree for the first time.
@@ -19,10 +18,21 @@ func _input(event: InputEvent) -> void:
 		var mousePosition := mouseEvent.position
 		updateCursorMarker(mousePosition)
 
+func getObstacleCircles() -> Array[CircleInfo]:
+	var circles: Array[CircleInfo] = []
+	for child in get_children():
+		if child is CircleMarker and child.is_in_group("obstacle"):
+			circles.append(
+				CircleInfo.new(
+					to_local(child.global_position),
+					child.radius
+				)
+			)
+	return circles
+
 func updateCursorMarker(globalPosition: Vector2) -> void:
 	var localTargetPosition = to_local(target.global_position)
-	var localObstaclePosition = to_local(obstacle.global_position)
-	var obstacleCircle = CircleInfo.new(localObstaclePosition, obstacle.radius)
+	var obstacles = getObstacleCircles()
 	
 	var localMouse = to_local(globalPosition)
 	
@@ -35,7 +45,7 @@ func updateCursorMarker(globalPosition: Vector2) -> void:
 		initialPosition,
 		localTargetPosition,
 		target.radius,
-		[obstacleCircle]
+		obstacles
 	)
 	
 	var globalConstrainedPosition = to_global(constrainedPosition)
