@@ -4,18 +4,31 @@
 [ext_resource type="Script" path="res://example-motion/scripts/obstacle-nodes/circle-marker.gd" id="1_yo8ic"]
 
 [node name="TransformWrapper" type="Node2D"]
-editor_description = "This is here so target can be at the origin!"
+editor_description = "This is here so target can be at the origin! I still need to move it to test, though."
 
 [node name="OneLinkObstacle" type="Node2D" parent="."]
 position = Vector2(680, 296)
 script = ExtResource("1_sx43s")
 
-[node name="Obstacle" type="Marker2D" parent="OneLinkObstacle"]
+[node name="Obstacle" type="Marker2D" parent="OneLinkObstacle" groups=["obstacle"]]
 unique_name_in_owner = true
-position = Vector2(443, 16)
+position = Vector2(-169, 5)
 script = ExtResource("1_yo8ic")
 fill = false
-radius = 400
+radius = 50
+
+[node name="Obstacle2" type="Marker2D" parent="OneLinkObstacle" groups=["obstacle"]]
+unique_name_in_owner = true
+position = Vector2(66, -150)
+script = ExtResource("1_yo8ic")
+fill = false
+radius = 50
+
+[node name="Obstacle3" type="Marker2D" parent="OneLinkObstacle" groups=["obstacle"]]
+unique_name_in_owner = true
+position = Vector2(122, 125)
+script = ExtResource("1_yo8ic")
+fill = false
 
 [node name="Target" type="Marker2D" parent="OneLinkObstacle"]
 unique_name_in_owner = true

@@ -126,34 +126,28 @@ func avoidObstacleConstraint(
 				current = lower
 				continue
 		
-		if Geometry2D.segment_intersects_circle(
+		# unexpectional intersection
+		# get intersection of possible joint locations
+		# and obstacle circles
+		# return closest one
+		var candidates = getIntersectionVectors(
 			target,
-			current,
+			distance,
 			obstacleLocation,
 			obstacleRadius
+		)
+		var upper: Vector2 = candidates[0]
+		var lower: Vector2 = candidates[1]
+		
+		if (
+			upper.distance_to(current) <= lower.distance_to(current)
 		):
-			# unexpectional intersection
-			# get intersection of possible joint locations
-			# and obstacle circles
-			# return closest one
-			var candidates = getIntersectionVectors(
-				target,
-				distance,
-				obstacleLocation,
-				obstacleRadius
-			)
-			var upper: Vector2 = candidates[0]
-			var lower: Vector2 = candidates[1]
-			
-			if (
-				upper.distance_to(current) <= lower.distance_to(current)
-			):
-				current = upper
-				continue
-			else:
-				current = lower
-				continue
-			
+			current = upper
+			continue
+		else:
+			current = lower
+			continue
+		
 		
 		# get intersections, then pick the closest one
 		# if there's only one intersection
