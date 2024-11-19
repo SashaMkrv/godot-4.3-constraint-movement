@@ -315,3 +315,35 @@ func getIntersectionVectors(
 		lineOfIntersectionCenter.y - height * xPerp
 	)
 	return [upper, lower]
+
+
+func checkLineCircleIntersection(
+	lineFrom: Vector2,
+	lineTo: Vector2,
+	circleOrigin: Vector2,
+	circleRadius: float
+) -> bool:
+	if Geometry2D.is_point_in_circle(
+		lineFrom,
+		circleOrigin,
+		circleRadius
+	) or Geometry2D.is_point_in_circle(
+		lineTo,
+		circleOrigin,
+		circleRadius
+	):
+		return true
+	var closestPoint = Geometry2D.get_closest_point_to_segment(
+		circleOrigin,
+		lineFrom,
+		lineTo
+		)
+	var distanceFromCircle = (closestPoint - circleOrigin).length()
+	var distanceFromLineEnd = (closestPoint - lineTo).length()
+	var segmentLength = (lineFrom - lineTo).length()
+	return (
+		distanceFromCircle < circleRadius
+	) and (
+		distanceFromLineEnd < segmentLength
+	)
+	return false
