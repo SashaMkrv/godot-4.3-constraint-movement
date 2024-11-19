@@ -86,10 +86,11 @@ func bodyLinkPosition(
 			distance,
 			minimumAngle
 		)
-		var obstacleConstained = getLocationWithObstacleAvoision(
+		var obstacleConstrained = getLocationWithObstacleAvoision(
+			angleConstrained,
 			beforeLink,
-			current,
-			distance
+			distance,
+			constantIdeal
 		)
 		# there is a secret obstacles fetch in here
 		# because I'm still not 100% on how to repr
@@ -162,9 +163,10 @@ func getIdealConstantNodeLocation(
 # move for all obstacles
 # will prioritize last obstacle
 func getLocationWithObstacleAvoision(
-	target: Vector2,
 	_current: Vector2,
-	distance: float
+	target: Vector2,
+	distance: float,
+	ideal: Vector2 = _current
 ) -> Vector2:
 	var current = _current
 	for obstacle in obstacles._getCircles():
