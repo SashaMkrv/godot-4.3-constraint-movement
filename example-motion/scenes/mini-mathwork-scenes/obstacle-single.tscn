@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://dx1nsh7x3wxjf"]
+
+[ext_resource type="Script" path="res://example-motion/scripts/scene-controllers/mini-mathwork/obstacle-single.gd" id="1_sx43s"]
+[ext_resource type="Script" path="res://example-motion/scripts/obstacle-nodes/circle-marker.gd" id="1_yo8ic"]
+
+[node name="TransformWrapper" type="Node2D"]
+editor_description = "This is here so target can be at the origin!"
+
+[node name="OneLinkObstacle" type="Node2D" parent="."]
+position = Vector2(680, 296)
+script = ExtResource("1_sx43s")
+
+[node name="Obstacle" type="Marker2D" parent="OneLinkObstacle"]
+unique_name_in_owner = true
+position = Vector2(-192, -2)
+script = ExtResource("1_yo8ic")
+fill = false
+radius = 75
+
+[node name="Target" type="Marker2D" parent="OneLinkObstacle"]
+unique_name_in_owner = true
+script = ExtResource("1_yo8ic")
+fill = false
+radius = 150
+
+[node name="LinkLine" type="Line2D" parent="OneLinkObstacle/Target"]
+unique_name_in_owner = true
+points = PackedVector2Array(0, 0, -150, 0)
+begin_cap_mode = 2
+end_cap_mode = 2
