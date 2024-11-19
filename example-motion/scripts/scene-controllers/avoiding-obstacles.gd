@@ -221,8 +221,9 @@ func getLocationWithObstacleAvoision(
 				obstacleLocation,
 				obstacleRadius
 			)
-			var upper: Vector2 = tangents[0] * distance
-			var lower: Vector2 = tangents[1] * distance
+			var upper: Vector2 = tangents[0] * distance + target
+			var lower: Vector2 = tangents[1] * distance + target
+			
 			if (
 				upper.distance_to(current) <= lower.distance_to(current)
 			):
