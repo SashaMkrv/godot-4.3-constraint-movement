@@ -96,7 +96,7 @@ func bodyLinkPosition(
 		# because I'm still not 100% on how to repr
 		# the obstacle info.
 		
-		return obstacleConstained
+		return obstacleConstrained
 	
 
 func constrainMaximumDistance(
