@@ -173,6 +173,7 @@ func getLocationWithObstacleAvoision(
 		var obstacleLocation = obstacle.location
 		var fromObstacleToTarget = target - obstacleLocation
 		var obstacleRadius = obstacle.radius
+		var obstacleBuffer = 1.0
 		
 		var distanceBetweenOrigins = fromObstacleToTarget.length()
 		
@@ -219,13 +220,13 @@ func getLocationWithObstacleAvoision(
 			var tangents = getTangentVectors(
 				target,
 				obstacleLocation,
-				obstacleRadius
+				obstacleRadius + obstacleBuffer
 			)
 			var upper: Vector2 = tangents[0] * distance + target
 			var lower: Vector2 = tangents[1] * distance + target
 			
 			if (
-				upper.distance_to(current) <= lower.distance_to(current)
+				upper.distance_to(ideal) <= lower.distance_to(ideal)
 			):
 				current = upper
 				continue
@@ -233,37 +234,60 @@ func getLocationWithObstacleAvoision(
 				current = lower
 				continue
 		
-		if Geometry2D.segment_intersects_circle(
+		# unexpectional intersection
+		# get intersection of possible joint locations
+		# and obstacle circles
+		# return closest one
+		
+		# this is not a good result if the target
+		# is too close to the obstacle.
+		var candidates = getIntersectionVectors(
+			target,
+			distance,
+			obstacleLocation,
+			obstacleRadius + obstacleBuffer
+		)
+		var upperIntersection: Vector2 = candidates[0]
+		var lowerIntersection: Vector2 = candidates[1]
+		
+		if (
+			upperIntersection.distance_to(ideal) <= lowerIntersection.distance_to(ideal)
+		):
+			current = upperIntersection
+		else:
+			current = lowerIntersection
+		
+		# check if the previous result intersects.
+		# if it does, grab the tangent instead.
+		# isn't it cool how much computers can compute?
+		# what a mess.
+		# I bet there's some actual math I could do
+		# to check which one to use.
+		if not checkLineCircleIntersection(
 			target,
 			current,
 			obstacleLocation,
 			obstacleRadius
 		):
-			# unexpectional intersection
-			# get intersection of possible joint locations
-			# and obstacle circles
-			# return closest one
-			var candidates = getIntersectionVectors(
-				target,
-				distance,
-				obstacleLocation,
-				obstacleRadius
-			)
-			var upper: Vector2 = candidates[0] * distance
-			var lower: Vector2 = candidates[1] * distance
-			
-			if (
-				upper.distance_to(current) <= lower.distance_to(current)
-			):
-				current = upper
-				continue
-			else:
-				current = lower
-				continue
-			
+			continue
 		
-		# get intersections, then pick the closest one
-		# if there's only one intersection
+		var tangents = getTangentVectors(
+				target,
+				obstacleLocation,
+				obstacleRadius + obstacleBuffer
+			)
+		var upperTangent: Vector2 = tangents[0] * distance + target
+		var lowerTangent: Vector2 = tangents[1] * distance + target
+		
+		if (
+			upperTangent.distance_to(ideal) <= lowerTangent.distance_to(ideal)
+		):
+			current = upperTangent
+			continue
+		else:
+			current = lowerTangent
+			continue
+		
 	return current
 
 
