@@ -12,10 +12,10 @@ script = ExtResource("1_sx43s")
 
 [node name="Obstacle" type="Marker2D" parent="OneLinkObstacle"]
 unique_name_in_owner = true
-position = Vector2(-192, -2)
+position = Vector2(443, 16)
 script = ExtResource("1_yo8ic")
 fill = false
-radius = 75
+radius = 400
 
 [node name="Target" type="Marker2D" parent="OneLinkObstacle"]
 unique_name_in_owner = true

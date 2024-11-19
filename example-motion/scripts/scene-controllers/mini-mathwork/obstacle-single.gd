@@ -140,8 +140,8 @@ func avoidObstacleConstraint(
 				obstacleLocation,
 				obstacleRadius
 			)
-			var upper: Vector2 = candidates[0] * distance
-			var lower: Vector2 = candidates[1] * distance
+			var upper: Vector2 = candidates[0]
+			var lower: Vector2 = candidates[1]
 			
 			if (
 				upper.distance_to(current) <= lower.distance_to(current)
