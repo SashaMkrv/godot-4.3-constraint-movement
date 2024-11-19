@@ -181,13 +181,26 @@ func getLocationWithObstacleAvoision(
 		):
 			continue
 		
-		# check if all possible joint locations are INSIDE
+		# check if all possible link locations intersect
 		# the obstacle
 		# if yes, good luck, so long!
 		if (
-			obstacleRadius >= distance
+			obstacleRadius > distance
 		) and (
 			distanceBetweenOrigins < obstacleRadius
+		) and not (
+			is_equal_approx(distanceBetweenOrigins, obstacleRadius)
+		):
+			continue
+		
+		# here is where calculating happens,
+		# so first check if there is an intersection
+		# at all
+		if not checkLineCircleIntersection(
+			target,
+			current,
+			obstacleLocation,
+			obstacleRadius
 		):
 			continue
 		
