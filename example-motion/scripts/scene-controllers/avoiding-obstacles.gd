@@ -168,7 +168,7 @@ func getLocationWithObstacleAvoision(
 ) -> Vector2:
 	var current = _current
 	for obstacle in obstacles._getCircles():
-		var obstacleLocation = Vector2(obstacle.location)
+		var obstacleLocation = obstacle.location
 		var fromObstacleToTarget = target - obstacleLocation
 		var obstacleRadius = obstacle.radius
 		
