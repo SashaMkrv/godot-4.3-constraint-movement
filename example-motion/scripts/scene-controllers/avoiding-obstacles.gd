@@ -280,6 +280,9 @@ func getTangentVectors(
 	return [upper, lower]
 
 ## We're assuming there IS an intersection here.
+## Godot's functions return packed vector arrays
+## which might be a better way to do this
+## but everything's a little script-y here as is
 func getIntersectionVectors(
 	origin1: Vector2,
 	radius1: float,
@@ -289,7 +292,7 @@ func getIntersectionVectors(
 	var originDistance = (origin1 - origin2).length()
 	
 	var baseLength1 = (
-		pow(radius1, 2.0) - pow(radius2, 2.0) + (originDistance)
+		pow(radius1, 2.0) - pow(radius2, 2.0) + pow(originDistance, 2.0)
 	)/(
 		2 * (originDistance)
 	)
