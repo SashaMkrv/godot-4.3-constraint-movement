@@ -26,9 +26,10 @@ radius = 50
 
 [node name="Obstacle3" type="Marker2D" parent="OneLinkObstacle" groups=["obstacle"]]
 unique_name_in_owner = true
-position = Vector2(122, 125)
+position = Vector2(47, 304)
 script = ExtResource("1_yo8ic")
 fill = false
+radius = 300
 
 [node name="Target" type="Marker2D" parent="OneLinkObstacle"]
 unique_name_in_owner = true

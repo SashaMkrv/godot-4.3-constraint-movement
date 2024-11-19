@@ -4,8 +4,8 @@
 [ext_resource type="Script" path="res://example-motion/scripts/obstacle-nodes/circle-handler.gd" id="2_gwm18"]
 [ext_resource type="Script" path="res://example-motion/scripts/obstacle-nodes/circle-marker.gd" id="3_os6s5"]
 
-[sub_resource type="Curve" id="Curve_2bg43"]
-_data = [Vector2(0.00675675, 0.684939), 0.0, 2.67274, 0, 0, Vector2(0.317568, 0.996249), 0.0, 0.0, 0, 0, Vector2(0.64527, 0.853722), -0.719293, -0.719293, 0, 0, Vector2(1, 0.58367), 0.0804504, 0.0, 0, 0]
+[sub_resource type="Curve" id="Curve_k8m8d"]
+_data = [Vector2(0.027027, 0.816215), 0.0, 0.81131, 0, 0, Vector2(0.239865, 0.958742), 0.693883, 0.693883, 0, 0, Vector2(0.628378, 0.939988), -0.903224, -0.903224, 0, 0, Vector2(1, 0.632429), 0.0, 0.0, 0, 0]
 point_count = 4
 
 [sub_resource type="Gradient" id="Gradient_gr071"]
@@ -14,8 +14,8 @@ colors = PackedColorArray(7.5084e-06, 0.941721, 0.776408, 1, 0.859995, 0.829577,
 [node name="AvoidingObstacles_JointsOnly" type="Node2D"]
 script = ExtResource("1_uelhs")
 distanceToTarget = 100.0
-linkSize = 50.0
-minimumAngle = 110.0
+linkSize = 30.0
+minimumAngle = 150.0
 
 [node name="CursorMarker" type="Line2D" parent="."]
 points = PackedVector2Array(0, 0, 0, 1)
@@ -25,9 +25,9 @@ begin_cap_mode = 2
 end_cap_mode = 2
 
 [node name="ChainLine" type="Line2D" parent="."]
-points = PackedVector2Array(0, 0, -200, 0, -400, 0, -600, 0, -800, 0, -1000, 0, -1200, 0, -1400, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+points = PackedVector2Array(0, 0, -200, 0, -400, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 width = 75.0
-width_curve = SubResource("Curve_2bg43")
+width_curve = SubResource("Curve_k8m8d")
 default_color = Color(0.0431373, 0.780392, 0.615686, 1)
 gradient = SubResource("Gradient_gr071")
 joint_mode = 2
@@ -38,17 +38,20 @@ round_precision = 14
 [node name="Obstacles" type="Node2D" parent="."]
 script = ExtResource("2_gwm18")
 
+[node name="Marker2D" type="Marker2D" parent="Obstacles" groups=["ObstacleMarker"]]
+position = Vector2(333, 256)
+script = ExtResource("3_os6s5")
+fill = false
+radius = 150
+
 [node name="Marker2D2" type="Marker2D" parent="Obstacles" groups=["ObstacleMarker"]]
 position = Vector2(867, 412)
 gizmo_extents = 50.0
 script = ExtResource("3_os6s5")
+fill = false
 
 [node name="Marker2D3" type="Marker2D" parent="Obstacles" groups=["ObstacleMarker"]]
 position = Vector2(722, 139)
 gizmo_extents = 75.0
 script = ExtResource("3_os6s5")
-
-[node name="Marker2D" type="Marker2D" parent="Obstacles" groups=["ObstacleMarker"]]
-position = Vector2(333, 256)
-script = ExtResource("3_os6s5")
-radius = 150
+fill = false
