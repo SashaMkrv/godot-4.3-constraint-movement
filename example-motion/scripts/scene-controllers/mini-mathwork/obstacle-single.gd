@@ -284,10 +284,3 @@ func checkLineCircleIntersection(
 		distanceFromLineEnd < segmentLength
 	)
 	return false
-
-class CircleInfo:
-	var location: Vector2
-	var radius: int
-	func _init(_location: Vector2i, _radius: int) -> void:
-		location = _location
-		radius = _radius

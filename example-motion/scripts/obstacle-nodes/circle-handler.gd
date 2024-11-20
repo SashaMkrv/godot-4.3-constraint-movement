@@ -1,12 +1,5 @@
 extends Node2D
 
-class CircleInfo:
-	var location: Vector2
-	var radius: int
-	func _init(_location: Vector2, _radius: int) -> void:
-		location = _location
-		radius = _radius
-
 func getCircles() -> Array[CircleInfo]:
 	return _getCircles()
 
