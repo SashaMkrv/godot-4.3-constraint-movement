@@ -19,12 +19,23 @@ func _input(event: InputEvent) -> void:
 		var mouseEvent : InputEventMouse = event
 		var position := mouseEvent.position
 		updateCursorMarker(position)
-		updateChainForPoint(position)
+		updateChainForCursor()
 
-func updateCursorMarker(newPosition: Vector2) -> void:
+func updateCursorMarker(_newPosition: Vector2) -> void:
+	var newPosition = _newPosition
+	for obstacle in getObstacles():
+		newPosition = constrainMinimumDistance(
+			newPosition,
+			obstacle.location,
+			obstacle.radius + 1.0
+		)
 	cursorMarker.position = newPosition
 
-func updateChainForPoint(position: Vector2) -> void:
+func getObstacles() -> Array[CircleInfo]:
+	return obstacles.getCircles()
+
+func updateChainForCursor() -> void:
+	var position = cursorMarker.position
 	var currentLine: PackedVector2Array = chainLine.points.duplicate()
 	#currentLine.reverse()
 	var nextPoints := nextPositions(position, currentLine)
@@ -36,8 +47,15 @@ func nextPositions(target: Vector2, _points: PackedVector2Array) -> PackedVector
 	if points.size() < 1:
 		return points
 	
+	var obstacleInfo = getObstacles()
+	
 	var originalHead := points[0]
-	var newHead := headPosition(target, originalHead, distanceToTarget)
+	var newHead := headPosition(
+		target,
+		originalHead,
+		distanceToTarget,
+		obstacleInfo
+	)
 	points[0] = newHead
 	
 	var targetLinkLocation: Vector2 = newHead
@@ -48,7 +66,9 @@ func nextPositions(target: Vector2, _points: PackedVector2Array) -> PackedVector
 			points[index],
 			linkVector,
 			linkSize,
-			minimumAngle
+			minimumAngle,
+			points[index],
+			obstacleInfo
 		)
 		points[index] = newPoint
 		linkVector = targetLinkLocation - newPoint
@@ -59,20 +79,33 @@ func nextPositions(target: Vector2, _points: PackedVector2Array) -> PackedVector
 func headPosition(
 	target: Vector2,
 	head: Vector2,
-	distance: float
+	distance: float,
+	obstacles: Array[CircleInfo]
 	) -> Vector2:
-	return constrainMaximumDistance(
-		head,
-		target,
-		distance
-	)
+		var constrained = constrainMaximumDistance(
+			head,
+			target,
+			distance
+		)
+		
+		var minimumed = constrained
+		for obstacle in obstacles:
+			minimumed = constrainMinimumDistance(
+				minimumed,
+				obstacle.location,
+				obstacle.radius
+			)
+		
+		return minimumed
 
 func bodyLinkPosition(
 	beforeLink: Vector2,
 	current: Vector2,
 	beforeLinkFromEnd: Vector2,
 	distance: float,
-	minimumAngle: float
+	minimumAngle: float,
+	previousLinkLocation: Vector2,
+	obstacles: Array[CircleInfo]
 	) -> Vector2:
 		var constantIdeal = constrainConstantDistance(
 			current,
@@ -90,6 +123,7 @@ func bodyLinkPosition(
 			angleConstrained,
 			beforeLink,
 			distance,
+			obstacles,
 			constantIdeal
 		)
 		# there is a secret obstacles fetch in here
@@ -98,6 +132,18 @@ func bodyLinkPosition(
 		
 		return obstacleConstrained
 	
+
+func constrainMinimumDistance(
+	currentLocation: Vector2,
+	targetLocation: Vector2,
+	distance: float
+) -> Vector2:
+	var rawDirection := (currentLocation - targetLocation)
+	var currentDistance := rawDirection.length()
+	if currentDistance >= distance:
+		return currentLocation
+	
+	return targetLocation + rawDirection.normalized() * distance
 
 func constrainMaximumDistance(
 	currentLocation: Vector2,
@@ -166,10 +212,13 @@ func getLocationWithObstacleAvoision(
 	_current: Vector2,
 	target: Vector2,
 	distance: float,
+	obstacles: Array[CircleInfo],
 	ideal: Vector2 = _current
 ) -> Vector2:
 	var current = _current
-	for obstacle in obstacles._getCircles():
+	# haha, we do this for every single joint
+	# disaster. Really need to pull out that CircleInfo class.
+	for obstacle in obstacles:
 		var obstacleLocation = obstacle.location
 		var fromObstacleToTarget = target - obstacleLocation
 		var obstacleRadius = obstacle.radius
