@@ -11,6 +11,7 @@ static func constantDistance(
 	
 	return target - rawDirection.normalized() * distance
 
+
 static func maximumDistance(
 	currentLocation: Vector2,
 	target: Vector2,
@@ -24,6 +25,7 @@ static func maximumDistance(
 	
 	return target - rawDirection.normalized() * distance
 
+
 static func minimumDistance(
 	currentLocation: Vector2,
 	target: Vector2,
@@ -36,6 +38,7 @@ static func minimumDistance(
 		return currentLocation
 	
 	return target - rawDirection.normalized() * distance
+
 
 static func minimumAngle(
 	currentLocation: Vector2,
@@ -67,6 +70,7 @@ static func minimumAngle(
 	
 	return target + fromTarget.normalized() * distance
 
+
 static func avoidObstacles(
 	_current: Vector2,
 	target: Vector2,
@@ -86,7 +90,8 @@ static func avoidObstacles(
 		)
 	
 	return current
-	
+
+
 static func avoidObstacle(
 	_current: Vector2,
 	target: Vector2,
