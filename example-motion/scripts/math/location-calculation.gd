@@ -78,7 +78,7 @@ static func avoidObstacles(
 	obstacles: Array[CircleInfo],
 	ideal: Vector2 = _current
 ) -> Vector2:
-	var current = _current
+	var current := _current
 	
 	for obstacle in obstacles:
 		current = avoidObstacle(
@@ -93,21 +93,19 @@ static func avoidObstacles(
 
 
 static func avoidObstacle(
-	_current: Vector2,
+	current: Vector2,
 	target: Vector2,
 	distance: float,
 	obstacle: CircleInfo,
-	ideal: Vector2 = _current
+	ideal: Vector2 = current
 ) -> Vector2:
-	var current = _current
-	
-	var obstacleLocation = obstacle.location
-	var fromObstacleToTarget = target - obstacleLocation
-	var obstacleRadius = obstacle.radius
+	var obstacleLocation := obstacle.location
+	var fromObstacleToTarget := target - obstacleLocation
+	var obstacleRadius := obstacle.radius
 	# this keeps the links from sticking to the obstacles
-	var obstacleBuffer = 1.0
+	var obstacleBuffer := 1.0
 	
-	var distanceBetweenOrigins = fromObstacleToTarget.length()
+	var distanceBetweenOrigins := fromObstacleToTarget.length()
 	
 	# check if there's anything to calculate
 	# too far from target for intersection at all
@@ -143,7 +141,7 @@ static func avoidObstacle(
 	# then it is too wide an angle for us
 	# if it's closer, then the angle of the intersection is
 	# too shallow and the line to an intersection will cut into the obstacle.
-	var distanceToTangent = WormGeometry.distanceToTangent(
+	var distanceToTangent := WormGeometry.distanceToTangent(
 		current,
 		obstacleLocation,
 		obstacleRadius + obstacleBuffer
@@ -152,7 +150,7 @@ static func avoidObstacle(
 		distanceToTangent < distance
 	):
 		# if yes, return the closest tangent
-		var tangents = WormGeometry.tangentVectors(
+		var tangents := WormGeometry.tangentVectors(
 			target,
 			obstacleLocation,
 			obstacleRadius + obstacleBuffer
@@ -166,7 +164,7 @@ static func avoidObstacle(
 	else:
 		# if not, get the intersections between the link and the obstacle,
 		# return the closest one
-		var intersections = WormGeometry.circleIntersections(
+		var intersections := WormGeometry.circleIntersections(
 			target,
 			distance,
 			obstacleLocation,
