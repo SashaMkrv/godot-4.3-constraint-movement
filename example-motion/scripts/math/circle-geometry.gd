@@ -1,7 +1,7 @@
 extends RefCounted
 class_name CircleGeometry
 
-func tangentVectors(
+static func tangentVectors(
 	point: Vector2,
 	circleOrigin: Vector2,
 	circleRadius: float
@@ -18,7 +18,7 @@ func tangentVectors(
 
 # We're assuming there ARE intersection here.
 # Though I think this is just NaNs if not.
-func circleIntersections(
+static func circleIntersections(
 	origin1: Vector2,
 	radius1: float,
 	origin2: Vector2,
@@ -58,7 +58,7 @@ func circleIntersections(
 	var lower = perpindicularLower + lineOfIntersectionCenter
 	return [upper, lower]
 
-func lineIntersectsCircle(
+static func lineIntersectsCircle(
 	lineFrom: Vector2,
 	lineTo: Vector2,
 	circleOrigin: Vector2,
