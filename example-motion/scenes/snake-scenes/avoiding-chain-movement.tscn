@@ -11,7 +11,7 @@ point_count = 4
 [sub_resource type="Gradient" id="Gradient_gr071"]
 colors = PackedColorArray(7.5084e-06, 0.941721, 0.776408, 1, 0.859995, 0.829577, 0, 1)
 
-[node name="AvoidingObstacles_JointsOnly" type="Node2D"]
+[node name="AvoidingObstacles" type="Node2D"]
 script = ExtResource("1_xn8r0")
 distanceToTarget = 100.0
 linkSize = 30.0
