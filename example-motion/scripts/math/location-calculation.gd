@@ -114,7 +114,9 @@ static func avoidObstacle(
 	if (
 		obstacleRadius > distance
 	) and (
-		distanceBetweenOrigins <= obstacleRadius
+		distanceBetweenOrigins < obstacleRadius
+	) and not (
+		is_equal_approx(distanceBetweenOrigins, obstacleRadius)
 	):
 		return current
 	
@@ -142,7 +144,7 @@ static func avoidObstacle(
 	if (
 		distanceToTangent < distance
 	):
-		# if yes, return the closest tangent instead
+		# if yes, return the closest tangent
 		var tangents = WormGeometry.tangentVectors(
 			target,
 			obstacleLocation,
