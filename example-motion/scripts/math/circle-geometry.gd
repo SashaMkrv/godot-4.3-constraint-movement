@@ -73,7 +73,38 @@ static func lineIntersectsCircle(
 	var distanceFromCircleOrigin = (closestPoint - circleOrigin).length()
 	return (distanceFromCircleOrigin < circleRadius)
 
-func lineIntersectsCircleVeryExtra(
+static func distanceToTangent(
+	point: Vector2,
+	circleOrigin: Vector2,
+	circleRadius: float
+) -> float:
+	var distanceToOrigin = (circleOrigin - point).length()
+	
+	return sqrt(
+		pow(distanceToOrigin, 2.0) + pow(circleRadius, 2.0)
+	)
+
+static func closestPoint(
+	target: Vector2,
+	candidates: PackedVector2Array
+) -> Vector2:
+	if candidates.size() == 0:
+		# >:( well don't do that. Please.
+		return Vector2.ZERO
+	
+	var closest := candidates[0]
+	var closestDistance := (closest - target).length()
+	var currentDistance: float
+	# redoes the first one, sorry.
+	for candidate in candidates:
+		currentDistance = (candidate - target).length()
+		if currentDistance < closestDistance:
+			closest = candidate
+			closestDistance = currentDistance
+	
+	return closest
+
+static func lineIntersectsCircleVeryExtra(
 	lineFrom: Vector2,
 	lineTo: Vector2,
 	circleOrigin: Vector2,
