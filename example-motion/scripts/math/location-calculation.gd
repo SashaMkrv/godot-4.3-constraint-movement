@@ -177,5 +177,3 @@ static func avoidObstacle(
 			ideal,
 			intersections
 		)
-	
-	return current
