@@ -16,6 +16,7 @@ static func tangentVectors(
 	var lower = baseVector.rotated(-theta)
 	return [upper.normalized(), lower.normalized()]
 
+
 # We're assuming there ARE intersection here.
 # Though I think this is just NaNs if not.
 static func circleIntersections(
@@ -36,7 +37,6 @@ static func circleIntersections(
 		pow(radius1, 2.0) - pow(baseLength1, 2.0)
 	)
 	
-	# multiple unit vector by traingle base length
 	var lineOfIntersectionCenter = (
 		origin2 - origin1
 	).normalized() * baseLength1 + origin1
@@ -44,6 +44,7 @@ static func circleIntersections(
 	var unitBaseDirection = (
 		origin2 - origin1
 	).normalized()
+	
 	var perpindicularUpper = Vector2(
 		unitBaseDirection.y,
 		-unitBaseDirection.x
@@ -53,10 +54,10 @@ static func circleIntersections(
 		unitBaseDirection.x
 	) * height
 	
-	
 	var upper = perpindicularUpper + lineOfIntersectionCenter
 	var lower = perpindicularLower + lineOfIntersectionCenter
 	return [upper, lower]
+
 
 static func lineIntersectsCircle(
 	lineFrom: Vector2,
@@ -73,6 +74,7 @@ static func lineIntersectsCircle(
 	var distanceFromCircleOrigin = (closestPoint - circleOrigin).length()
 	return (distanceFromCircleOrigin < circleRadius)
 
+
 static func distanceToTangent(
 	point: Vector2,
 	circleOrigin: Vector2,
@@ -83,6 +85,7 @@ static func distanceToTangent(
 	return sqrt(
 		pow(distanceToOrigin, 2.0) + pow(circleRadius, 2.0)
 	)
+
 
 static func closestPoint(
 	target: Vector2,
