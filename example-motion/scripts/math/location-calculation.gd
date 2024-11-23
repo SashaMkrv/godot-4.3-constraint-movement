@@ -99,6 +99,7 @@ static func avoidObstacle(
 	var obstacleLocation = obstacle.location
 	var fromObstacleToTarget = target - obstacleLocation
 	var obstacleRadius = obstacle.radius
+	# this keeps the links from sticking to the obstacles
 	var obstacleBuffer = 1.0
 	
 	var distanceBetweenOrigins = fromObstacleToTarget.length()
@@ -116,6 +117,7 @@ static func avoidObstacle(
 	) and (
 		distanceBetweenOrigins < obstacleRadius
 	) and not (
+		# this keeps wobbling around obstacles from happening
 		is_equal_approx(distanceBetweenOrigins, obstacleRadius)
 	):
 		return current
