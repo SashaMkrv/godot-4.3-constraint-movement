@@ -198,14 +198,6 @@ func angleConstrainedConstantDistance(
 		return targetLocation + fromTarget.normalized() * distance
 
 
-func getIdealConstantNodeLocation(
-	target: Vector2,
-	current: Vector2,
-	distance: float
-	) -> Vector2:
-		return constrainConstantDistance(current, target, distance)
-
-
 # move for all obstacles
 # will prioritize last obstacle
 func getLocationWithObstacleAvoision(

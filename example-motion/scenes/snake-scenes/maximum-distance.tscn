@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dsx5h7xwqj7v6"]
 
-[ext_resource type="Script" path="res://example-motion/scripts/scene-controllers/maximum-distance-to-cursor.gd" id="1_yhilw"]
+[ext_resource type="Script" path="res://example-motion/scripts/scene-controllers/snakes/maximum-distance-to-cursor.gd" id="1_yhilw"]
 
 [node name="MaximumDistance" type="Node2D"]
 script = ExtResource("1_yhilw")

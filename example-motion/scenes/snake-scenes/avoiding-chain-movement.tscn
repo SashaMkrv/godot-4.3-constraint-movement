@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://2imjpwc4ueyd"]
 
-[ext_resource type="Script" path="res://example-motion/scripts/scene-controllers/avoiding-obstacles.gd" id="1_uelhs"]
-[ext_resource type="Script" path="res://example-motion/scripts/obstacle-nodes/circle-handler.gd" id="2_gwm18"]
-[ext_resource type="Script" path="res://example-motion/scripts/obstacle-nodes/circle-marker.gd" id="3_os6s5"]
+[ext_resource type="Script" path="res://example-motion/scripts/scene-controllers/snakes/avoiding-obstacles.gd" id="1_xn8r0"]
+[ext_resource type="Script" path="res://example-motion/scripts/obstacle-nodes/circle-handler.gd" id="2_bjvfy"]
+[ext_resource type="Script" path="res://example-motion/scripts/obstacle-nodes/circle-marker.gd" id="3_8pb35"]
 
 [sub_resource type="Curve" id="Curve_k8m8d"]
 _data = [Vector2(0.027027, 0.816215), 0.0, 0.81131, 0, 0, Vector2(0.239865, 0.958742), 0.693883, 0.693883, 0, 0, Vector2(0.628378, 0.939988), -0.903224, -0.903224, 0, 0, Vector2(1, 0.632429), 0.0, 0.0, 0, 0]
@@ -12,30 +12,30 @@ point_count = 4
 colors = PackedColorArray(7.5084e-06, 0.941721, 0.776408, 1, 0.859995, 0.829577, 0, 1)
 
 [node name="AvoidingObstacles_JointsOnly" type="Node2D"]
-script = ExtResource("1_uelhs")
+script = ExtResource("1_xn8r0")
 distanceToTarget = 100.0
 linkSize = 30.0
-minimumAngle = 150.0
+minimumAngle = 120.0
 
 [node name="Obstacles" type="Node2D" parent="."]
-script = ExtResource("2_gwm18")
+script = ExtResource("2_bjvfy")
 
 [node name="Marker2D" type="Marker2D" parent="Obstacles" groups=["ObstacleMarker"]]
 position = Vector2(333, 256)
-script = ExtResource("3_os6s5")
+script = ExtResource("3_8pb35")
 fillColor = Color(0.877891, 0.793319, 0.905606, 1)
 radius = 150
 
 [node name="Marker2D2" type="Marker2D" parent="Obstacles" groups=["ObstacleMarker"]]
 position = Vector2(867, 412)
 gizmo_extents = 50.0
-script = ExtResource("3_os6s5")
+script = ExtResource("3_8pb35")
 fillColor = Color(0.877891, 0.793319, 0.905606, 1)
 
 [node name="Marker2D3" type="Marker2D" parent="Obstacles" groups=["ObstacleMarker"]]
 position = Vector2(722, 139)
 gizmo_extents = 75.0
-script = ExtResource("3_os6s5")
+script = ExtResource("3_8pb35")
 fillColor = Color(0.877891, 0.793319, 0.905606, 1)
 
 [node name="CursorMarker" type="Line2D" parent="."]

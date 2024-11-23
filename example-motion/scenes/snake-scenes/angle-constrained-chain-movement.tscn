@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://tprsh3ns7u6h"]
 
-[ext_resource type="Script" path="res://example-motion/scripts/scene-controllers/angle-constricted-chain-to-cursor.gd" id="1_nxqgq"]
+[ext_resource type="Script" path="res://example-motion/scripts/scene-controllers/snakes/angle-constricted-chain-to-cursor.gd" id="1_ib60f"]
 
 [sub_resource type="Curve" id="Curve_2bg43"]
 _data = [Vector2(0.00675675, 0.684939), 0.0, 2.67274, 0, 0, Vector2(0.317568, 0.996249), 0.0, 0.0, 0, 0, Vector2(0.64527, 0.853722), -0.719293, -0.719293, 0, 0, Vector2(1, 0.58367), 0.0804504, 0.0, 0, 0]
@@ -10,7 +10,7 @@ point_count = 4
 colors = PackedColorArray(7.5084e-06, 0.941721, 0.776408, 1, 0.859995, 0.829577, 0, 1)
 
 [node name="AngleConstrainedChainMovement" type="Node2D"]
-script = ExtResource("1_nxqgq")
+script = ExtResource("1_ib60f")
 distanceToTarget = 100.0
 linkSize = 50.0
 minimumAngle = 110.0
