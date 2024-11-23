@@ -1,5 +1,5 @@
 extends RefCounted
-class_name CircleGeometry
+class_name WormGeometry
 
 static func tangentVectors(
 	point: Vector2,
